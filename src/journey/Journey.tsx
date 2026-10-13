@@ -17,6 +17,7 @@ export function Journey() {
   const { progress, complete, setSwitchPattern, reset, resetCount, completedCount } = useProgress()
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [showHint, setShowHint] = useState(true)
+  const [expandedInterview, setExpandedInterview] = useState<number | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
 
   const active = SEGMENTS[currentStepIndex]
@@ -29,6 +30,7 @@ export function Journey() {
     if (!isLast) {
       setCurrentStepIndex((prev) => prev + 1)
       setShowHint(true)
+      setExpandedInterview(null)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
@@ -37,6 +39,7 @@ export function Journey() {
     if (!isFirst) {
       setCurrentStepIndex((prev) => prev - 1)
       setShowHint(true)
+      setExpandedInterview(null)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
@@ -44,6 +47,7 @@ export function Journey() {
   const handleSelectStep = (index: number) => {
     setCurrentStepIndex(index)
     setShowHint(true)
+    setExpandedInterview(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -52,6 +56,7 @@ export function Journey() {
     setConfirmReset(false)
     setCurrentStepIndex(0)
     setShowHint(true)
+    setExpandedInterview(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -173,6 +178,53 @@ export function Journey() {
               />
             )}
           </LabCard>
+
+          {/* 面向未来 AI 原生体系映射 */}
+          {active.aiMapping && (
+            <div className="ai-mapping-banner">
+              <div className="ai-mapping-header">
+                <span className="ai-badge">🚀 为什么必须懂底层？面向未来 AI 范式映射</span>
+              </div>
+              <p>{active.aiMapping}</p>
+            </div>
+          )}
+
+          {/* 大厂高频架构面试题与灵魂拷问 */}
+          {active.interviews && active.interviews.length > 0 && (
+            <div className="interview-section">
+              <div className="interview-section-header">
+                <span className="interview-fire-badge">🔥 大厂高频架构面试题与深度追问</span>
+                <span className="interview-hint">点击展开查看大厂资深架构师标答推导</span>
+              </div>
+              <div className="interview-cards-grid">
+                {active.interviews.map((item, idx) => {
+                  const isExpanded = expandedInterview === idx
+                  return (
+                    <div key={idx} className={`interview-item-card ${isExpanded ? 'expanded' : ''}`}>
+                      <button
+                        type="button"
+                        className="interview-q-btn"
+                        onClick={() => setExpandedInterview(isExpanded ? null : idx)}
+                      >
+                        <div className="q-left">
+                          <span className="q-tag">Q{idx + 1}</span>
+                          <span className="q-text">{item.question}</span>
+                        </div>
+                        <span className="q-toggle-text">{isExpanded ? '收起 ▲' : '查看解析 ▼'}</span>
+                      </button>
+                      <div className="interview-focus mono">🎯 考察重心：{item.focus}</div>
+                      {isExpanded && (
+                        <div className="interview-ans-box">
+                          <span className="ans-tag">💡 资深架构师推导标答：</span>
+                          <p>{item.answer}</p>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           {/* 阶段性启示便签 */}
           {sign && (

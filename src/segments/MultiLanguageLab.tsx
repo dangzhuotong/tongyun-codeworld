@@ -6,7 +6,7 @@ interface LangProfile {
   key: LangKey
   name: string
   tagline: string
-  paradigm: string
+  aiRole: string
   runtimeModel: string
   memoryModel: string
   concurrencyModel: string
@@ -28,13 +28,13 @@ const LANGUAGES: Record<LangKey, LangProfile> = {
     key: 'cpp',
     name: 'C / C++',
     tagline: '直接贴地飞行的性能怪兽，硬件的直接翻译器',
-    paradigm: '多范式、系统级、面向对象/泛型',
+    aiRole: '在未来 AI 架构中：编写底层 CUDA C++ 算子加速、显卡显存直接搬运，以及顶尖大模型推理引擎核心（如 TensorRT-LLM, llama.cpp）。',
     runtimeModel: '纯 AOT 本地机器码编译，零额外运行时',
     memoryModel: '手动管理 (malloc/free, new/delete, RAII)，裸指针直接操作物理内存',
-    concurrencyModel: 'OS 原生内核线程 (std::thread, pthread)，锁与原子操作',
+    concurrencyModel: 'OS 原生内核线程 (std::thread, pthread)，锁与硬件原子指令',
     scores: { perf: 5, safety: 1, concurrency: 3, ergonomics: 2, memoryEfficiency: 5 },
-    bestFor: '操作系统内核、游戏引擎、数据库底层存储引擎 (RocksDB)、高性能音视频编解码',
-    avoidWhen: '业务快速变动的普通 Web 应用、缺乏资深老手的团队（极易产生野指针崩溃与内存越界漏洞）',
+    bestFor: '操作系统内核、游戏引擎、数据库底层存储引擎 (RocksDB)、AI底层高并发CUDA算子',
+    avoidWhen: '快速变动的普通业务CRUD、缺乏资深老手的团队（易产生野指针与越界内存安全隐患）',
     memoryDiagramText: '栈区直接放结构体；堆区由程序员手动 malloc 物理地址；忘记 free 就会发生内存泄漏。',
     counterCode: `// C++: 使用硬件原子指令实现无锁并发计数器
 #include <atomic>
@@ -51,15 +51,15 @@ void worker() {
   rust: {
     key: 'rust',
     name: 'Rust',
-    tagline: '不妥协的系统架构神作：零 GC 极速性能 + 编译期 100% 内存安全',
-    paradigm: '系统级、函数式、特征(Trait)驱动',
-    runtimeModel: '纯 AOT 机器码编译，无 GC 垃圾回收器，零抽象惩罚',
+    tagline: '零成本抽象的系统神作：极速性能 + 编译期 100% 内存安全',
+    aiRole: '在未来 AI 架构中：构建安全沙箱（Firecracker微虚拟机）、WASM边缘运行时、高吞吐向量检索核心（Qdrant）与高性能数据分析（Polars）。',
+    runtimeModel: '纯 AOT 机器码编译，无 GC 垃圾回收器，零抽象运行时惩罚',
     memoryModel: '所有权机制 (Ownership) + 借用检查器 (Borrow Checker)，离开作用域自动释放',
     concurrencyModel: '无畏并发 (Send/Sync 特征，编译期杜绝数据竞争) + async/await 状态机',
     scores: { perf: 5, safety: 5, concurrency: 5, ergonomics: 3, memoryEfficiency: 5 },
-    bestFor: '下一代基础架构、分布式系统核心 (TiKV)、加密算法与区块链、Linux 内核模块、高性能 WebAssembly',
-    avoidWhen: '急于交付的创业初期轻量 CRUD、需要大量循环引用图结构的复杂双向链表场景',
-    memoryDiagramText: '每一个堆内存拥有唯一 Owner；借用检查器在编译阶段保证没有悬垂指针，运行时零开销。',
+    bestFor: '新一代基础云原生底座、分布式一致性存储 (TiKV)、加密算法、安全AI沙箱',
+    avoidWhen: '急于交付的敏捷轻量原型、包含复杂双向循环引用图结构的有向图场景',
+    memoryDiagramText: '每一个堆内存拥有唯一 Owner；借用检查器在编译阶段保证没有悬垂指针，运行时零GC开销。',
     counterCode: `// Rust: 编译期强制检查线程安全
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -78,14 +78,14 @@ for _ in 0..10 {
   go: {
     key: 'go',
     name: 'Go (Golang)',
-    tagline: '云原生与分布式微服务的绝对霸主，为高并发网络而生',
-    paradigm: '极简结构化、强类型、接口鸭子类型',
+    tagline: '云原生与高并发网关的绝对霸主，为分布式网络而生',
+    aiRole: '在未来 AI 架构中：构建高并发大模型推理 API 网关、Kubernetes 容器编排调度器、分布式智能体通信总线与流式排队集群。',
     runtimeModel: 'AOT 机器码编译，内置轻量级运行时与 M:N 协程调度器',
     memoryModel: '轻量并发标记清除 GC（STW 延迟低于 1 毫秒），逃逸分析决定栈或堆',
     concurrencyModel: 'CSP 协程模型：Goroutine (初始仅 2KB) + Channel 通道通信',
     scores: { perf: 4, safety: 4, concurrency: 5, ergonomics: 5, memoryEfficiency: 4 },
-    bestFor: 'Kubernetes/Docker 云原生体系、微服务集群、网络网关、高性能分布式中间件',
-    avoidWhen: '硬实时系统、高频量化交易系统（虽然 GC 极短但仍偶有微毫秒抖动）、复杂科学计算',
+    bestFor: 'Kubernetes/Docker 云原生体系、高并发 API 网关、微服务业务后端、中间件集群',
+    avoidWhen: '硬实时系统、高频量化交易系统（虽然 GC 极短但仍偶有微毫秒抖动）、底层矩阵算子开发',
     memoryDiagramText: '变量自动通过逃逸分析分配；后台 GC 线程定期三色标记，无需手动管理。',
     counterCode: `// Go: 原生 Goroutine 协程并发
 package main
@@ -106,13 +106,13 @@ func worker() {
     key: 'java',
     name: 'Java',
     tagline: '企业级大型工业架构的常青树，生态体系极其深厚',
-    paradigm: '面向对象、强类型、泛型与反射',
+    aiRole: '在未来 AI 架构中：大型企业已有中台交易系统与大数据流处理平台（Flink/Kafka）平滑接入大模型企业级智能体应用。',
     runtimeModel: 'JVM 字节码 + HotSpot JIT 即时编译器（热点代码动态编译为汇编）',
     memoryModel: 'JVM 分代堆内存 (新生代 Eden/Survivor + 老年代)，配备 G1 / ZGC 回收器',
     concurrencyModel: 'OS 线程池模型 (java.util.concurrent) + 最新 JDK 21 虚拟线程 (Project Loom)',
     scores: { perf: 4, safety: 4, concurrency: 4, ergonomics: 4, memoryEfficiency: 2 },
     bestFor: '银行金融核心交易、超大型复杂业务企业中台、大数据计算生态 (Hadoop/Flink/Kafka)',
-    avoidWhen: '资源极度受限的嵌入式/IoT 设备、要求几毫秒冷启动的纯 Serverless 函数',
+    avoidWhen: '资源极度受限的嵌入式/IoT 设备、要求几毫秒冷启动的纯 Serverless 极简函数',
     memoryDiagramText: '所有 Object 都在堆上分配，对象头占用 12~16 字节，通过指针访问，内存开销较重。',
     counterCode: `// Java: 强大的并发包原子类与 CAS
 import java.util.concurrent.atomic.AtomicLong;
@@ -129,7 +129,7 @@ public class CounterService {
     key: 'python',
     name: 'Python',
     tagline: 'AI 与数据科学的天下共主，胶水语言的终极形态',
-    paradigm: '动态强类型、多范式、极度优雅易读',
+    aiRole: '在未来 AI 架构中：深度学习算法实验、PyTorch 训练微调、数据清洗流水线，以及 LangChain/LlamaIndex Agent 敏捷开发的主战场。',
     runtimeModel: 'CPython 解释器执行字节码，计算密集型严重依赖底层 C/C++ 扩展 (PyTorch/NumPy)',
     memoryModel: '引用计数机制为主（每个对象包装 PyObject，开销 ~28 字节）+ 分代循环引用垃圾回收',
     concurrencyModel: '受限于全局解释器锁 (GIL)；I/O 密集型使用 Asyncio 协程，计算密集型使用多进程 (Multiprocessing)',
@@ -152,14 +152,14 @@ def worker():
   ts: {
     key: 'ts',
     name: 'TypeScript (Node.js)',
-    tagline: '全栈与现代人机界面的统治者，结构化类型的优雅之美',
-    paradigm: '结构化静态类型 (Structural Typing)、函数式、面向对象',
+    tagline: '全栈交互与人机界面的统治者，结构化类型的优雅之美',
+    aiRole: '在未来 AI 架构中：构筑 AI 时代的前端人机协同 Copilot 界面、Next.js 智能体全栈应用，以及 Anthropic MCP（模型上下文协议）服务器编写。',
     runtimeModel: '编译为 JavaScript，由 V8 引擎执行并进行高效 JIT 即时编译',
     memoryModel: 'V8 引擎堆内存分代垃圾回收 (新生代 Scavenge + 老年代 Mark-Sweep)',
     concurrencyModel: '单线程事件循环 (Event Loop) + 异步非阻塞 I/O (libuv) + Worker Threads',
     scores: { perf: 3, safety: 4, concurrency: 4, ergonomics: 5, memoryEfficiency: 3 },
-    bestFor: '现代全栈 Web 开发、高并发 I/O 密集型 API 网关、跨平台桌面客户端 (Electron)、前后端类型同构',
-    avoidWhen: '密集型图形/矩阵数字运算、对微秒级垃圾回收停顿极度敏感的高频系统',
+    bestFor: '现代全栈 Web 开发、高并发 I/O 密集型 API 网关、跨平台桌面客户端 (Electron)、MCP 智能体工具编写',
+    avoidWhen: '密集型图形/矩阵数字运算、对微秒级垃圾回收停顿极度敏感的高频底层系统',
     memoryDiagramText: '单主线程独享堆栈；无需任何并发锁即可操作普通变量；耗时 I/O 扔给底层 libuv 线程池。',
     counterCode: `// TypeScript (Node.js): 单线程事件循环天然无竞态
 let counter = 0;
@@ -195,7 +195,7 @@ export function MultiLanguageLab({ completed, onComplete }: MultiLanguageLabProp
 
   return (
     <div className="multilang-lab">
-      {/* 顶部语言选择器 */}
+      {/* 语言选择器 */}
       <div className="lang-tabs-bar">
         {(Object.keys(LANGUAGES) as LangKey[]).map((key) => {
           const l = LANGUAGES[key]
@@ -220,7 +220,12 @@ export function MultiLanguageLab({ completed, onComplete }: MultiLanguageLabProp
             <h3>{current.name}</h3>
             <p className="lang-tagline">{current.tagline}</p>
           </div>
-          <span className="paradigm-badge">{current.paradigm}</span>
+        </div>
+
+        {/* AI 原生定位横幅 */}
+        <div className="lang-ai-role-banner">
+          <span className="ai-badge-pill">🤖 未来 AI 原生架构定位：</span>
+          <p>{current.aiRole}</p>
         </div>
 
         {/* 架构维度五边形评分条 */}
@@ -300,7 +305,7 @@ export function MultiLanguageLab({ completed, onComplete }: MultiLanguageLabProp
         {/* 同一业务场景代码横向对照 */}
         <div className="code-comparison-box">
           <div className="code-header">
-            <span>经典实操场景：高并发安全计数器实现代码</span>
+            <span>同题对照：高并发无锁计数器实现（只看关键设计，不扣细枝末节）</span>
             <span className="mono code-lang-tag">{current.key.toUpperCase()}</span>
           </div>
           <pre className="mono code-block">

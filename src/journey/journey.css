@@ -2163,3 +2163,182 @@
 .btn-link:hover {
   color: var(--text);
 }
+
+/* ==========================================================================
+   未来 AI 范式映射 & 大厂高频架构面试题面板样式
+   ========================================================================== */
+
+/* AI 范式映射横幅 */
+.ai-mapping-banner {
+  background: linear-gradient(135deg, #f7efe6 0%, #fcf5ed 100%);
+  border: 1.5px solid var(--border);
+  border-left: 4px solid var(--accent-matcha-deep);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 4px 14px rgba(74, 63, 53, 0.04);
+}
+
+.ai-mapping-header {
+  margin-bottom: 6px;
+}
+
+.ai-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-matcha-deep);
+  background: color-mix(in srgb, var(--accent-matcha) 15%, white);
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.ai-mapping-banner p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+/* 语言卡片内的 AI 原生角色定位 */
+.lang-ai-role-banner {
+  background: #fdf5ec;
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px dashed var(--border);
+}
+
+.ai-badge-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-peach-deep);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.lang-ai-role-banner p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* 大厂高频面试题模块 */
+.interview-section {
+  background: #fffdf9;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+}
+
+.interview-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 8px;
+}
+
+.interview-fire-badge {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.interview-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.interview-cards-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.interview-item-card {
+  background: #fdf7f0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: all 200ms ease;
+}
+
+.interview-item-card.expanded {
+  background: white;
+  border-color: var(--accent-matcha);
+  box-shadow: 0 4px 16px rgba(122, 158, 126, 0.12);
+}
+
+.interview-q-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.q-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: 1;
+}
+
+.q-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  background: var(--accent-peach-deep);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.q-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.q-toggle-text {
+  font-size: 0.78rem;
+  color: var(--accent-matcha-deep);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.interview-focus {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.interview-ans-box {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  animation: hint-in 200ms ease;
+}
+
+.ans-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-matcha-deep);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.interview-ans-box p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--text);
+  line-height: 1.6;
+}
