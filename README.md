@@ -6,6 +6,8 @@
 
 **MVP 五段路可以在本地走通**：电与开关、逻辑门、CPU 步进、神经网络玩具、注意力直觉。竖向长卷，路过短提示，路边实验台可动手，进度写在 `localStorage`（键 `tongyun-codeworld:progress`）。后做路段只在路上留淡色路牌。
 
+线上地址（推到 `master` 后由 GitHub Actions 发布）：https://dangzhuotong.github.io/tongyun-codeworld/
+
 详细见：
 
 | 文档 | 内容 |
@@ -24,7 +26,7 @@ npm install
 npm run dev
 ```
 
-浏览器打开终端提示的本地地址。构建与预览：
+浏览器打开终端提示的本地地址。默认站点子路径是 `/tongyun-codeworld/`，和 Pages 一致；本地若要挂在根路径，可先设 `VITE_BASE=/`。构建与预览：
 
 ```bash
 npm run build
@@ -64,7 +66,7 @@ tongyun-codeworld/
 ## 技术意向
 
 - Vite + React + TypeScript
-- 静态部署友好（GitHub Pages）
+- 静态部署到 GitHub Pages：https://dangzhuotong.github.io/tongyun-codeworld/
 - 进度仅存 `localStorage`，无后端、无账号
 
 ## 给谁用
