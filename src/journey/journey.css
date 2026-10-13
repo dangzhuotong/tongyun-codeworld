@@ -1859,3 +1859,307 @@
   color: var(--text-muted);
   line-height: 1.45;
 }
+
+/* ==========================================================================
+   单页工作台模式（Step-by-Step Studio Mode）样式
+   ========================================================================== */
+
+.studio-mode {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.brand-group h1 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.brand-group p {
+  font-size: 0.85rem;
+  margin: 2px 0 0;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.meter-mini {
+  width: 90px;
+  height: 6px;
+  border-radius: 999px;
+  background: #e9dacb;
+  overflow: hidden;
+}
+
+.meter-mini span {
+  display: block;
+  height: 100%;
+  background: var(--accent-matcha);
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+/* 步骤导航胶囊栏 */
+.step-nav-bar {
+  display: flex;
+  gap: 8px;
+  max-width: 860px;
+  margin: 12px auto 0;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+}
+
+.step-nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.step-nav-pill:hover {
+  border-color: var(--accent-matcha);
+  color: var(--text);
+}
+
+.step-nav-pill.current {
+  background: white;
+  border-color: var(--accent-matcha-deep);
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(107, 143, 113, 0.15);
+  transform: translateY(-1px);
+}
+
+.step-nav-pill.done {
+  border-color: var(--accent-matcha);
+  background: color-mix(in srgb, var(--accent-matcha) 12%, white);
+}
+
+.step-pill-idx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f0e3d5;
+  font-size: 0.72rem;
+  font-weight: bold;
+}
+
+.step-nav-pill.current .step-pill-idx {
+  background: var(--accent-matcha-deep);
+  color: white;
+}
+
+.step-nav-pill.done .step-pill-idx {
+  background: var(--accent-matcha);
+  color: white;
+}
+
+/* 舞台容器 */
+.stage-container {
+  max-width: 860px;
+  width: 100%;
+  margin: 20px auto 40px;
+  padding: 0 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stage-hint-wrap {
+  animation: hint-in 240ms ease;
+}
+
+.stage-content {
+  display: grid;
+  gap: 16px;
+}
+
+.lab-stage {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.lab-head-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lab-index-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-matcha-deep);
+  background: color-mix(in srgb, var(--accent-matcha) 15%, white);
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.lab-subtitle {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.done-stamp {
+  background: color-mix(in srgb, var(--accent-matcha) 20%, white);
+  color: var(--accent-matcha-deep);
+  border: 1px solid var(--accent-matcha);
+}
+
+.learning-stamp {
+  background: #f6eee3;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.lab-goal-banner {
+  margin: 12px 0 18px;
+  background: #fbf5ee;
+  border-left: 3px solid var(--accent-matcha);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.goal-flag {
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.goal-text {
+  color: var(--text);
+}
+
+.lab-workbench-body {
+  margin-top: 8px;
+}
+
+/* 时代启示录便签 */
+.epoch-sign {
+  background: #f8efe4;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.sign-badge {
+  font-size: 0.72rem;
+  font-weight: bold;
+  color: var(--accent-peach-deep);
+}
+
+.epoch-sign h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.epoch-sign p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* 底部导向控制条 */
+.step-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 20px;
+  box-shadow: 0 4px 16px rgba(74, 63, 53, 0.05);
+}
+
+.step-status-center {
+  flex: 1;
+  text-align: center;
+  font-size: 0.86rem;
+}
+
+.status-text.pass {
+  color: var(--accent-matcha-deep);
+  font-weight: 600;
+}
+
+.status-text.pending {
+  color: var(--text-muted);
+}
+
+.btn-next-active {
+  background: var(--accent-matcha-deep);
+  box-shadow: 0 4px 14px rgba(107, 143, 113, 0.35);
+  font-weight: 700;
+  transform: scale(1.02);
+}
+
+.finish-pill {
+  padding: 10px 18px;
+  background: color-mix(in srgb, var(--accent-matcha) 20%, white);
+  color: var(--accent-matcha-deep);
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* 极简页脚 */
+.footer-mini {
+  padding: 12px 20px 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+}
+
+.btn-link:hover {
+  color: var(--text);
+}

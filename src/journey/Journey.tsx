@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { HintBubble } from '../components/HintBubble.tsx'
 import { LabCard } from '../components/LabCard.tsx'
 import { useProgress } from '../progress/useProgress.ts'
-import { SEGMENT_IDS, type SegmentId } from '../progress/types.ts'
 import { AttentionLab } from '../segments/AttentionLab.tsx'
 import { ROAD_SIGNS, SEGMENTS } from '../segments/catalog.ts'
 import { CpuLab } from '../segments/CpuLab.tsx'
@@ -14,203 +13,221 @@ import { SwitchLab } from '../segments/SwitchLab.tsx'
 import { SystemArchLab } from '../segments/SystemArchLab.tsx'
 import './journey.css'
 
-function isSegmentId(value: string | null): value is SegmentId {
-  return value !== null && (SEGMENT_IDS as readonly string[]).includes(value)
-}
-
 export function Journey() {
   const { progress, complete, setSwitchPattern, reset, resetCount, completedCount } = useProgress()
-  const [activeId, setActiveId] = useState<SegmentId>('switch')
-  const [scrollRatio, setScrollRatio] = useState(0)
-  const [hintFor, setHintFor] = useState<SegmentId | null>(null)
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [showHint, setShowHint] = useState(true)
   const [confirmReset, setConfirmReset] = useState(false)
-  const dismissedRef = useRef(new Set<SegmentId>())
-  const ratiosRef = useRef(new Map<SegmentId, number>())
 
-  useEffect(() => {
-    const onScroll = () => {
-      const root = document.documentElement
-      const max = root.scrollHeight - root.clientHeight
-      setScrollRatio(max <= 0 ? 0 : root.scrollTop / max)
+  const active = SEGMENTS[currentStepIndex]
+  const isFirst = currentStepIndex === 0
+  const isLast = currentStepIndex === SEGMENTS.length - 1
+  const isCurrentDone = !!progress.segments[active.id]?.completed
+  const sign = ROAD_SIGNS.find((item) => item.after === active.id)
+
+  const handleNext = () => {
+    if (!isLast) {
+      setCurrentStepIndex((prev) => prev + 1)
+      setShowHint(true)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }
 
-  useEffect(() => {
-    const nodes = SEGMENT_IDS.map((id) => document.querySelector(`[data-segment="${id}"]`)).filter(
-      (node): node is Element => node !== null,
-    )
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute('data-segment')
-          if (!isSegmentId(id)) return
-          ratiosRef.current.set(id, entry.isIntersecting ? entry.intersectionRatio : 0)
-          if (!entry.isIntersecting) dismissedRef.current.delete(id)
-        })
+  const handlePrev = () => {
+    if (!isFirst) {
+      setCurrentStepIndex((prev) => prev - 1)
+      setShowHint(true)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
-        let best: SegmentId | null = null
-        let bestRatio = 0
-        for (const [id, ratio] of ratiosRef.current) {
-          if (ratio > bestRatio) {
-            best = id
-            bestRatio = ratio
-          }
-        }
-        if (!best || bestRatio <= 0) return
-        setActiveId(best)
-        if (!dismissedRef.current.has(best)) setHintFor(best)
-      },
-      { threshold: [0.2, 0.4, 0.6] },
-    )
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [resetCount])
-
-  useEffect(() => {
-    if (!hintFor) return
-    const id = hintFor
-    const timer = window.setTimeout(() => {
-      dismissedRef.current.add(id)
-      setHintFor((current) => (current === id ? null : current))
-    }, 8000)
-    return () => window.clearTimeout(timer)
-  }, [hintFor])
-
-  const active = SEGMENTS.find((segment) => segment.id === activeId) ?? SEGMENTS[0]
-  const activeIndex = active.index
-
-  const dismissHint = () => {
-    if (!hintFor) return
-    dismissedRef.current.add(hintFor)
-    setHintFor(null)
+  const handleSelectStep = (index: number) => {
+    setCurrentStepIndex(index)
+    setShowHint(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const confirmAndReset = () => {
     reset()
-    dismissedRef.current.clear()
-    ratiosRef.current.clear()
     setConfirmReset(false)
-    setHintFor(null)
+    setCurrentStepIndex(0)
+    setShowHint(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
-    <div className="page">
+    <div className="page studio-mode">
+      {/* 顶部吸顶状态栏 & 步骤横向导航条 */}
       <header className="topbar">
         <div className="topbar-inner">
-          <div>
-            <p className="brand">代码世界 · 架构师之路</p>
+          <div className="brand-group">
+            <h1 className="brand">代码世界 · 架构师进阶录</h1>
             <p className="brand-sub">
-              顺着路往下走 · 第 {activeIndex}/8 段 · {active.title}
+              第 0{active.index} 节 · {active.title}
             </p>
           </div>
-          <p className="walked">走过 {completedCount}/8</p>
+          <div className="status-badge">
+            <span className="walked">已掌握 <strong>{completedCount}</strong>/8 节</span>
+            <div className="meter-mini" aria-hidden="true">
+              <span style={{ width: `${Math.round((completedCount / 8) * 100)}%` }} />
+            </div>
+          </div>
         </div>
-        <div className="meter" aria-hidden="true">
-          <span style={{ width: `${Math.round(scrollRatio * 100)}%` }} />
-        </div>
-        <div className="dots" aria-hidden="true">
-          {SEGMENTS.map((segment) => {
-            const done = progress.segments[segment.id]?.completed
-            const current = segment.id === activeId
-            const tone = done ? 'pip done' : current ? 'pip here' : 'pip'
-            return <span key={segment.id} className={tone} title={segment.title} />
+
+        {/* 八大纪元单步导向轴 (Step Indicator Bar) */}
+        <nav className="step-nav-bar" aria-label="课程章节导航">
+          {SEGMENTS.map((segment, index) => {
+            const isDone = !!progress.segments[segment.id]?.completed
+            const isCurrent = index === currentStepIndex
+            return (
+              <button
+                key={segment.id}
+                type="button"
+                className={`step-nav-pill ${isCurrent ? 'current' : ''} ${isDone ? 'done' : ''}`}
+                onClick={() => handleSelectStep(index)}
+                title={`${segment.index}. ${segment.title}`}
+              >
+                <span className="step-pill-idx">
+                  {isDone ? '✓' : `0${segment.index}`}
+                </span>
+                <span className="step-pill-title">{segment.title.split(' ')[0]}</span>
+              </button>
+            )
           })}
-        </div>
+        </nav>
       </header>
 
-      <main className="road">
-        <section className="intro">
-          <h1>从物理开关到系统与大模型架构师</h1>
-          <p>
-            拒绝浮躁与黑盒，这是一条因果相连的连续探索之路：
-            从物理电平、算术加法器、CPU指令，到操作系统虚拟内存、六大编程语言架构抉择、高并发分布式防线，再到神经网络与大模型注意力。
-            每一段都有第一性原理图解与可动手的实操台。
-          </p>
-        </section>
+      {/* 中心舞台：当前节专注学习与实操面板 */}
+      <main className="stage-container">
+        {/* 路过提示短语 */}
+        {showHint && (
+          <div className="stage-hint-wrap">
+            <HintBubble text={active.hint} onClose={() => setShowHint(false)} />
+          </div>
+        )}
 
-        {SEGMENTS.map((segment) => {
-          const sign = ROAD_SIGNS.find((item) => item.after === segment.id)
-          const done = !!progress.segments[segment.id]?.completed
-          return (
-            <div key={segment.id}>
-              <section className="segment" data-segment={segment.id} id={segment.id}>
-                <span className={done ? 'mile done' : 'mile'} aria-hidden="true" />
-                {hintFor === segment.id ? <HintBubble text={segment.hint} onClose={dismissHint} /> : null}
-                <LabCard index={segment.index} title={segment.title} goal={segment.goal} completed={done}>
-                  {segment.id === 'switch' ? (
-                    <SwitchLab
-                      key={`switch-${resetCount}`}
-                      pattern={progress.segments.switch.lastPattern}
-                      completed={done}
-                      onPatternChange={setSwitchPattern}
-                    />
-                  ) : null}
-                  {segment.id === 'gates' ? (
-                    <GatesLab
-                      key={`gates-${resetCount}`}
-                      completed={done}
-                      onComplete={() => complete('gates')}
-                    />
-                  ) : null}
-                  {segment.id === 'cpu' ? (
-                    <CpuLab key={`cpu-${resetCount}`} completed={done} onComplete={() => complete('cpu')} />
-                  ) : null}
-                  {segment.id === 'os' ? (
-                    <OsLab key={`os-${resetCount}`} completed={done} onComplete={() => complete('os')} />
-                  ) : null}
-                  {segment.id === 'languages' ? (
-                    <MultiLanguageLab
-                      key={`languages-${resetCount}`}
-                      completed={done}
-                      onComplete={() => complete('languages')}
-                    />
-                  ) : null}
-                  {segment.id === 'arch' ? (
-                    <SystemArchLab
-                      key={`arch-${resetCount}`}
-                      completed={done}
-                      onComplete={() => complete('arch')}
-                    />
-                  ) : null}
-                  {segment.id === 'nn' ? (
-                    <NnLab key={`nn-${resetCount}`} completed={done} onComplete={() => complete('nn')} />
-                  ) : null}
-                  {segment.id === 'attn' ? (
-                    <AttentionLab
-                      key={`attn-${resetCount}`}
-                      completed={done}
-                      onComplete={() => complete('attn')}
-                    />
-                  ) : null}
-                </LabCard>
-              </section>
-              {sign ? (
-                <aside className="sign">
-                  <p className="sign-title">{sign.title}</p>
-                  <p>{sign.text}</p>
-                </aside>
-              ) : null}
+        {/* 核心工作台 */}
+        <div className="stage-content">
+          <LabCard
+            index={active.index}
+            title={active.title}
+            subtitle={active.subtitle}
+            goal={active.goal}
+            completed={isCurrentDone}
+          >
+            {active.id === 'switch' && (
+              <SwitchLab
+                key={`switch-${resetCount}`}
+                pattern={progress.segments.switch.lastPattern}
+                completed={isCurrentDone}
+                onPatternChange={setSwitchPattern}
+              />
+            )}
+            {active.id === 'gates' && (
+              <GatesLab
+                key={`gates-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('gates')}
+              />
+            )}
+            {active.id === 'cpu' && (
+              <CpuLab
+                key={`cpu-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('cpu')}
+              />
+            )}
+            {active.id === 'os' && (
+              <OsLab
+                key={`os-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('os')}
+              />
+            )}
+            {active.id === 'languages' && (
+              <MultiLanguageLab
+                key={`languages-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('languages')}
+              />
+            )}
+            {active.id === 'arch' && (
+              <SystemArchLab
+                key={`arch-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('arch')}
+              />
+            )}
+            {active.id === 'nn' && (
+              <NnLab
+                key={`nn-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('nn')}
+              />
+            )}
+            {active.id === 'attn' && (
+              <AttentionLab
+                key={`attn-${resetCount}`}
+                completed={isCurrentDone}
+                onComplete={() => complete('attn')}
+              />
+            )}
+          </LabCard>
+
+          {/* 阶段性启示便签 */}
+          {sign && (
+            <aside className="epoch-sign">
+              <span className="sign-badge">💡 架构启示</span>
+              <h4>{sign.title}</h4>
+              <p>{sign.text}</p>
+            </aside>
+          )}
+        </div>
+
+        {/* 底部前后步进控制条 (Step Footer Bar) */}
+        <footer className="step-footer-bar">
+          <button
+            type="button"
+            className="btn secondary"
+            disabled={isFirst}
+            onClick={handlePrev}
+          >
+            ◀ 上一节
+          </button>
+
+          <div className="step-status-center">
+            {isCurrentDone ? (
+              <span className="status-text pass">
+                ✨ 本节实操已通关！随时可以进入下一节
+              </span>
+            ) : (
+              <span className="status-text pending">
+                👉 在上方完成实操目标即可通关本节
+              </span>
+            )}
+          </div>
+
+          {!isLast ? (
+            <button
+              type="button"
+              className={`btn ${isCurrentDone ? 'btn-next-active' : ''}`}
+              onClick={handleNext}
+            >
+              学完这个，进入下一节 ▶
+            </button>
+          ) : (
+            <div className="finish-pill">
+              🎉 已登顶第八节架构师闭环！
             </div>
-          )
-        })}
-
-        <section className="ending">
-          <p>
-            {completedCount === 8
-              ? '🎉 八大纪元全部走过！从物理开关、算术加法器、CPU指令、操作系统虚拟内存、六大编程语言架构，到高并发分布式防线、神经网络与大模型注意力，你已经打通了完整的架构师心智模型！'
-              : `已走过 ${completedCount}/8 段。可以继续往下滚，或随时回头拧开没做完的实验台。`}
-          </p>
-        </section>
+          )}
+        </footer>
       </main>
 
-      <footer className="footer">
+      {/* 极简页脚与重置进度 */}
+      <footer className="footer-mini">
         {confirmReset ? (
           <div className="reset-row">
-            <span>清空八大纪元的「走过了」进度？</span>
+            <span>清空所有 8 节的通关进度？</span>
             <button type="button" className="btn" onClick={confirmAndReset}>
               确定重置
             </button>
@@ -219,11 +236,14 @@ export function Journey() {
             </button>
           </div>
         ) : (
-          <button type="button" className="btn secondary" onClick={() => setConfirmReset(true)}>
-            重置进度
-          </button>
+          <div className="footer-links">
+            <button type="button" className="btn-link" onClick={() => setConfirmReset(true)}>
+              重置学习进度
+            </button>
+            <span>·</span>
+            <span>纯前端单页架构 · 本地自动记忆</span>
+          </div>
         )}
-        <p>纯前端静态架构。进度写在这台浏览器的 localStorage 里，无后端无隐私收集。</p>
       </footer>
     </div>
   )
