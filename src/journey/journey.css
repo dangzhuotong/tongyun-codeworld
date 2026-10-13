@@ -2342,3 +2342,1011 @@
   color: var(--text);
   line-height: 1.6;
 }
+
+/* ==========================================================================
+   各段实操沙盘通用子标签 (Sub-Tabs) 样式
+   ========================================================================== */
+
+.lab-sub-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px dashed var(--border);
+}
+
+.sub-tab-btn {
+  background: #fbf5ee;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+}
+
+.sub-tab-btn:hover {
+  border-color: var(--accent-matcha);
+  color: var(--text);
+}
+
+.sub-tab-btn.active {
+  background: color-mix(in srgb, var(--accent-matcha) 20%, white);
+  border-color: var(--accent-matcha-deep);
+  color: var(--accent-matcha-deep);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(107, 143, 113, 0.15);
+}
+
+.tab-pane-content {
+  display: grid;
+  gap: 14px;
+  animation: hint-in 200ms ease;
+}
+
+/* ==========================================================================
+   SwitchLab: 原码反码补码 & IEEE 754 浮点数样式
+   ========================================================================== */
+
+.twos-content,
+.float-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.twos-display-card {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fdf8f2;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.twos-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.twos-result-box {
+  background: #fcf5ea;
+  border-left: 3px solid var(--accent-matcha);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.twos-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.tip-box {
+  background: #fffdf9;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.tip-box h5 {
+  margin: 0 0 4px;
+  font-size: 0.88rem;
+  color: var(--accent-peach-deep);
+}
+
+/* 浮点数拆解 */
+.float-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.float-num-input {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  width: 110px;
+  background: #fffdfb;
+}
+
+.float-quick-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.ieee-visualizer {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  text-align: center;
+  background: white;
+}
+
+.ieee-part {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ieee-part.sign-part {
+  background: #fdeeed;
+  color: #8c2a24;
+  min-width: 70px;
+}
+
+.ieee-part.exp-part {
+  background: #eef7f1;
+  color: #2e663a;
+  min-width: 140px;
+}
+
+.ieee-part.frac-part {
+  background: #f0f4fa;
+  color: #23528f;
+  flex: 1;
+  word-break: break-all;
+}
+
+.part-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.part-code {
+  font-size: 0.86rem;
+  letter-spacing: 0.05em;
+}
+
+.part-desc {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.float-conclusion {
+  background: #fff8f0;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   GatesLab: 全加器、RS锁存器、万能门
+   ========================================================================== */
+
+.full-adder-content,
+.latch-content,
+.basic-gates-view {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.fa-inputs-panel {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fa-sum-row {
+  background: #fbf5ee;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+}
+
+.fa-calc-card {
+  display: flex;
+  justify-content: space-around;
+  background: #fdf8f2;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.fa-cascade-tip {
+  background: #f7efe6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.latch-workbench {
+  display: grid;
+  gap: 12px;
+}
+
+.latch-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.latch-state-box {
+  background: #fcf5ea;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.state-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.state-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   CpuLab: 存储金字塔 & 分支预测
+   ========================================================================== */
+
+.hierarchy-content,
+.branch-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.pyramid-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.pyramid-card {
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level-reg {
+  background: #fdeeed;
+  border-color: #f0bdb9;
+}
+
+.level-l1 {
+  background: #fdf2e9;
+  border-color: #eecab2;
+}
+
+.level-l3 {
+  background: #fdf8e6;
+  border-color: #e8dca5;
+}
+
+.level-ram {
+  background: #edf7ef;
+  border-color: #b9e0bf;
+}
+
+.level-ssd {
+  background: #eff3fa;
+  border-color: #c1d5ef;
+}
+
+.pyr-head {
+  display: flex;
+  flex-direction: column;
+}
+
+.pyr-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.pyr-time {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.branch-case-box {
+  background: #fbf5ee;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.branch-code-snippet {
+  background: #332b25;
+  color: #f7ede3;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+}
+
+.branch-explain {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* ==========================================================================
+   OsLab: 64位虚拟内存塔 & epoll vs select
+   ========================================================================== */
+
+.layout-content,
+.epoll-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.process-layout-tower {
+  display: grid;
+  gap: 4px;
+  background: #faf4ed;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.tower-segment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+}
+
+.seg-kernel {
+  background: #fcdbd8;
+  color: #8c2a24;
+  font-weight: 700;
+}
+
+.seg-stack {
+  background: #e4eefb;
+  color: #215194;
+}
+
+.seg-mmap {
+  background: #f4eaf9;
+  color: #6d2c88;
+}
+
+.seg-heap {
+  background: #e2f4e8;
+  color: #246d37;
+}
+
+.seg-data {
+  background: #f9f0df;
+  color: #7d5218;
+}
+
+.seg-text {
+  background: #f2ede7;
+  color: #4f473e;
+}
+
+.seg-name {
+  font-weight: 600;
+}
+
+.seg-addr {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.epoll-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.epoll-card {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #fffdfb;
+}
+
+.epoll-card.card-select {
+  border-color: #eecab2;
+  background: #fffaf5;
+}
+
+.epoll-card.card-epoll {
+  border-color: var(--accent-matcha);
+  background: #f7faf7;
+}
+
+.epoll-card h5 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.epoll-card ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   SystemArchLab: 缓存三大灾难 & Raft 共识
+   ========================================================================== */
+
+.cache-disaster-content,
+.raft-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.disaster-toggle-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.disaster-detail-card {
+  background: #fff8f0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.disaster-detail-card h5 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--accent-peach-deep);
+}
+
+.solution-box {
+  background: #f2faf4;
+  border-left: 3px solid var(--accent-matcha);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 6px;
+  font-size: 0.84rem;
+}
+
+.raft-nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .raft-nodes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.raft-node-card {
+  background: #fcf5ee;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  display: grid;
+  gap: 4px;
+}
+
+.raft-node-card.leader {
+  background: #f2faf4;
+  border-color: var(--accent-matcha);
+  box-shadow: 0 4px 12px rgba(107, 143, 113, 0.2);
+}
+
+.node-id {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.node-role {
+  font-size: 0.85rem;
+}
+
+.node-role.leader-text {
+  color: var(--accent-matcha-deep);
+  font-weight: 700;
+}
+
+.node-term {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.raft-action-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   NnLab: 激活函数族 & ResNet 残差跳连
+   ========================================================================== */
+
+.activation-content,
+.resnet-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.activation-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.act-card {
+  background: #fcf7f1;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.act-card h5 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.act-formula {
+  background: #fffdfb;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.act-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.resnet-box {
+  background: #f8efe4;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.resnet-formula {
+  background: #fffdf9;
+  border-left: 3px solid var(--accent-matcha);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.resnet-solution {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* ==========================================================================
+   AttentionLab: QKV点积、Prefill vs Decode、KV Cache & PagedAttention
+   ========================================================================== */
+
+.qkv-section,
+.prefill-decode-section,
+.kv-calc-section {
+  display: grid;
+  gap: 14px;
+  animation: hint-in 200ms ease;
+}
+
+.math-derivation-note {
+  margin-top: 6px;
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.qkv-formula-view {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.phases-contrast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .phases-contrast-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.phase-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  transition: all 200ms ease;
+}
+
+.phase-card.phase-active {
+  border-color: var(--accent-matcha);
+  box-shadow: 0 4px 14px rgba(107, 143, 113, 0.18);
+  background: #fafdfa;
+}
+
+.phase-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.prefill-badge {
+  background: #eef7f1;
+  color: #2b6a3a;
+}
+
+.decode-badge {
+  background: #fdf1ed;
+  color: #923429;
+}
+
+.phase-specs-list {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.bottle-pill {
+  font-size: 0.76rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.bottle-pill.compute {
+  background: #e1f4e5;
+  color: #2b6a3a;
+}
+
+.bottle-pill.memory {
+  background: #fdeeed;
+  color: #8c2a24;
+}
+
+.live-inference-simulator {
+  background: #fcf6ef;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.live-inference-simulator h5 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.sim-token-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.prompt-token {
+  background: #f4eee6;
+  color: var(--text);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.84rem;
+}
+
+.sim-hardware-meters {
+  display: grid;
+  gap: 8px;
+}
+
+.hardware-meter-box {
+  display: grid;
+  gap: 4px;
+}
+
+.meter-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.meter-bar-track {
+  height: 8px;
+  background: #e9dacb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-bar-inner {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+.compute-color {
+  background: var(--accent-matcha);
+}
+
+.memory-color {
+  background: var(--accent-peach-deep);
+}
+
+.meter-val {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.sim-ctrl-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* KV Cache 计算器 */
+.mono-formula-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.calc-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .calc-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-controls-panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.control-group {
+  display: grid;
+  gap: 6px;
+}
+
+.ctrl-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.model-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.model-pill-btn {
+  background: #fbf5ee;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 180ms ease;
+}
+
+.model-pill-btn.active {
+  border-color: var(--accent-matcha-deep);
+  background: color-mix(in srgb, var(--accent-matcha) 15%, white);
+  color: var(--accent-matcha-deep);
+  font-weight: 700;
+}
+
+.label-val-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.val-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-peach-deep);
+}
+
+.range-slider {
+  width: 100%;
+  accent-color: var(--accent-matcha);
+  cursor: pointer;
+}
+
+.precision-btn-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  accent-color: var(--accent-matcha);
+}
+
+.calc-results-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.vram-metric-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 4px;
+}
+
+.vram-metric-card.alert-kv-card {
+  background: #fff8f5;
+  border-color: #f2c7bc;
+}
+
+.vram-metric-card.total-card {
+  background: #f6faf6;
+  border: 1.5px solid var(--accent-matcha);
+}
+
+.m-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.m-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.m-val.highlight {
+  color: var(--accent-peach-deep);
+}
+
+.m-val.total-val {
+  color: var(--accent-matcha-deep);
+}
+
+.m-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.paged-attention-concept-box {
+  background: #fbf5ee;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.paged-attention-concept-box h5 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.paged-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 580px) {
+  .paged-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compare-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.compare-block.bad {
+  border-left: 3px solid var(--accent-peach-deep);
+}
+
+.compare-block.good {
+  border-left: 3px solid var(--accent-matcha);
+}
+
+.compare-block h6 {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+}
+
