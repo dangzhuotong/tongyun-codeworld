@@ -27,6 +27,21 @@ function markCompleted(prev: ProgressState, id: SegmentId): ProgressState {
         ...prev,
         segments: { ...prev.segments, cpu: { completed: true } },
       }
+    case 'os':
+      return {
+        ...prev,
+        segments: { ...prev.segments, os: { completed: true } },
+      }
+    case 'languages':
+      return {
+        ...prev,
+        segments: { ...prev.segments, languages: { completed: true } },
+      }
+    case 'arch':
+      return {
+        ...prev,
+        segments: { ...prev.segments, arch: { completed: true } },
+      }
     case 'nn':
       return {
         ...prev,
@@ -55,7 +70,7 @@ export function useProgress() {
 
   const setSwitchPattern = (pattern: string) => {
     setProgress((prev) => {
-      const completed = prev.segments.switch.completed || pattern === '101'
+      const completed = prev.segments.switch.completed || pattern.length === 8
       const next: ProgressState = {
         ...prev,
         segments: {

@@ -1,29 +1,22 @@
-import { emptyProgress, STORAGE_KEY, type ProgressState } from './types.ts'
-
-function isBitPattern(value: unknown): value is string {
-  return typeof value === 'string' && /^[01]{3}$/.test(value)
-}
-
-function isProgress(value: unknown): value is ProgressState {
-  if (!value || typeof value !== 'object') return false
-  const segments = (value as ProgressState).segments
-  if (!segments) return false
-  return (
-    typeof segments.switch?.completed === 'boolean' &&
-    isBitPattern(segments.switch.lastPattern) &&
-    typeof segments.gates?.completed === 'boolean' &&
-    typeof segments.cpu?.completed === 'boolean' &&
-    typeof segments.nn?.completed === 'boolean' &&
-    typeof segments.attn?.completed === 'boolean'
-  )
-}
+import { emptyProgress, STORAGE_KEY, SEGMENT_IDS, type ProgressState } from './types.ts'
 
 export function loadProgress(): ProgressState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return emptyProgress()
-    const parsed: unknown = JSON.parse(raw)
-    return isProgress(parsed) ? parsed : emptyProgress()
+    const parsed = JSON.parse(raw) as Partial<ProgressState>
+    const base = emptyProgress()
+    if (parsed && typeof parsed === 'object' && parsed.segments) {
+      for (const key of SEGMENT_IDS) {
+        if (parsed.segments[key]) {
+          base.segments[key] = {
+            ...base.segments[key],
+            ...parsed.segments[key],
+          } as never
+        }
+      }
+    }
+    return base
   } catch {
     return emptyProgress()
   }

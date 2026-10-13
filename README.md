@@ -4,7 +4,15 @@
 
 ## 当前阶段
 
-**MVP 五段路可以在本地走通**：电与开关、逻辑门、CPU 步进、神经网络玩具、注意力直觉。竖向长卷，路过短提示，路边实验台可动手，进度写在 `localStorage`（键 `tongyun-codeworld:progress`）。后做路段只在路上留淡色路牌。
+**全景八大纪元已全面贯通**：
+1. 电、开关与 8 位字节 ASCII 编码
+2. 逻辑门与半加器动态电路（1+1=10 物理实现）
+3. 冯·诺依曼微机时钟节拍与四拍流水线
+4. 操作系统与虚拟内存 / MMU 页表隔离沙盘
+5. 六大主流编程语言（C/Rust/Go/Java/Python/TS）架构大比拼与并发模拟
+6. 分布式高并发系统架构沙盘（Redis 缓存 + Kafka 削峰 + Sentinel 熔断）
+7. 神经网络 2D 决策边界拟合与梯度下降
+8. Transformer 自注意力机制与 KV Cache 显存带宽墙沙盘
 
 线上地址（推到 `master` 后由 GitHub Actions 发布）：https://dangzhuotong.github.io/tongyun-codeworld/
 
@@ -12,12 +20,12 @@
 
 | 文档 | 内容 |
 |------|------|
+| [docs/architect-blueprint.md](docs/architect-blueprint.md) | **架构大拿终极演进体系设计蓝图**（理念、图解、多语言对比、实操规范） |
 | [docs/vision.md](docs/vision.md) | 产品愿景与「连续探索」原则 |
-| [docs/roadmap.md](docs/roadmap.md) | 完整时代路段大纲 |
-| [docs/mvp.md](docs/mvp.md) | MVP 5 段验收标准 |
-| [docs/style.md](docs/style.md) | 视觉与手帐风格 |
+| [docs/roadmap.md](docs/roadmap.md) | 完整八大纪元路段大纲 |
+| [docs/style.md](docs/style.md) | 视觉与暖奶茶手帐风格 |
 | [AGENTS.md](AGENTS.md) | AI / agy 开发规则 |
-| [docs/tasks/001-scaffold-mvp.md](docs/tasks/001-scaffold-mvp.md) | 第一份可执行任务书 |
+| [docs/tasks/001-scaffold-mvp.md](docs/tasks/001-scaffold-mvp.md) | 脚手架与核心路段任务书 |
 
 ## 本地跑（脚手架完成后）
 

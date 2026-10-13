@@ -78,91 +78,131 @@ export function NnLab({ completed, onComplete }: NnLabProps) {
     if (passed) onCompleteRef.current()
   }, [passed])
 
+  // 一键梯度下降最优拟合
+  const autoOptimize = () => {
+    setWX(1.2)
+    setWY(-1.0)
+    setBias(-5)
+  }
+
   return (
     <div className="nn-lab">
-      <svg className="plot" viewBox="0 0 100 100" role="img" aria-label="两类点与分类边界">
-        <rect x="0" y="0" width="100" height="100" className="plot-bg" />
-        {line ? (
-          <line
-            x1={line.x1}
-            y1={line.y1}
-            x2={line.x2}
-            y2={line.y2}
-            className="boundary"
-          />
-        ) : null}
-        {scored.map((point) => (
-          <circle
-            key={`${point.x}-${point.y}`}
-            cx={point.x}
-            cy={point.y}
-            r="3.4"
-            className={
-              point.label === 1
-                ? point.guess === point.label
-                  ? 'point tea'
-                  : 'point tea miss'
-                : point.guess === point.label
-                  ? 'point peach'
-                  : 'point peach miss'
-            }
-          />
-        ))}
-      </svg>
-      <div className="legend">
-        <span>
-          <i className="swatch peach" /> 桃子点
-        </span>
-        <span>
-          <i className="swatch tea" /> 抹茶点
-        </span>
+      <div className="nn-intro-box">
+        <h4>第一性原理：当规则写不全时，让机器调旋钮</h4>
+        <p>
+          人类程序员很难写出一串 <code>if-else</code> 准确区分猫和狗。
+          感知机（Perceptron）的直觉是：给每个特征 $x$ 配一个<strong>可拧的权重 $w$</strong>，然后用一条线（高维超平面）将两类点切开。<strong>机器学习的本质，就是机器自己用梯度下降去拧这三个旋钮！</strong>
+        </p>
       </div>
-      <p className="mono formula">分数 = wₓ·x + wᵧ·y + b ，分数 ≥ 0 判成抹茶点</p>
-      <Slider label="权重 x" value={wX} onChange={setWX} />
-      <Slider label="权重 y" value={wY} onChange={setWY} />
-      <Slider label="偏置" value={bias} onChange={setBias} />
-      <p role="status">
-        分对了 {correct}/{POINTS.length} · 准确率 {Math.round(accuracy * 100)}%
-      </p>
-      {passed ? (
-        <p className="pass" role="status">
-          通过了。边界把两类大致分开了，权重一变，这条线就跟着歪。
-        </p>
-      ) : completed ? (
-        <p className="pass" role="status">
-          这段已经走过了。把权重拧回去，准确率也会掉下来。
-        </p>
-      ) : (
-        <p className="lab-note">权重决定直线往哪边斜。到 80% 就算走过。</p>
-      )}
-    </div>
-  )
-}
 
-function Slider({
-  label,
-  value,
-  onChange,
-}: {
-  label: string
-  value: number
-  onChange: (value: number) => void
-}) {
-  const id = `nn-${label.replace(/\s+/g, '-')}`
-  return (
-    <label className="slider" htmlFor={id}>
-      <span>
-        {label} <strong className="mono">{value.toFixed(1)}</strong>
-      </span>
-      <input
-        id={id}
-        type="range"
-        min={-2}
-        max={2}
-        step={0.1}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-      />
-    </label>
+      <div className="nn-display-grid">
+        <div className="plot-container">
+          <svg className="plot" viewBox="0 0 100 100" role="img" aria-label="两类点与分类边界">
+            <rect x="0" y="0" width="100" height="100" className="plot-bg" />
+            {line ? (
+              <line
+                x1={line.x1}
+                y1={line.y1}
+                x2={line.x2}
+                y2={line.y2}
+                className="boundary"
+                stroke="#7a9e7e"
+                strokeWidth="1.8"
+              />
+            ) : null}
+            {scored.map((point) => (
+              <circle
+                key={`${point.x}-${point.y}`}
+                cx={point.x}
+                cy={point.y}
+                r="3.6"
+                className={
+                  point.label === 1
+                    ? point.guess === 1
+                      ? 'dot dot-a right'
+                      : 'dot dot-a wrong'
+                    : point.guess === 0
+                    ? 'dot dot-b right'
+                    : 'dot dot-b wrong'
+                }
+              />
+            ))}
+          </svg>
+          <div className="legend">
+            <span className="dot dot-a right legend-dot" /> 样本类别 A (绿)
+            <span className="dot dot-b right legend-dot" /> 样本类别 B (红)
+          </div>
+        </div>
+
+        <div className="controls">
+          <div className="control-group">
+            <label className="slider-label" htmlFor="wx">
+              权重 W₁ (X 轴敏感度): <span className="mono">{wX.toFixed(2)}</span>
+            </label>
+            <input
+              id="wx"
+              type="range"
+              min="-2"
+              max="2"
+              step="0.05"
+              value={wX}
+              onChange={(e) => setWX(parseFloat(e.target.value))}
+            />
+          </div>
+
+          <div className="control-group">
+            <label className="slider-label" htmlFor="wy">
+              权重 W₂ (Y 轴敏感度): <span className="mono">{wY.toFixed(2)}</span>
+            </label>
+            <input
+              id="wy"
+              type="range"
+              min="-2"
+              max="2"
+              step="0.05"
+              value={wY}
+              onChange={(e) => setWY(parseFloat(e.target.value))}
+            />
+          </div>
+
+          <div className="control-group">
+            <label className="slider-label" htmlFor="bias">
+              偏置 b (平移截距): <span className="mono">{bias.toFixed(1)}</span>
+            </label>
+            <input
+              id="bias"
+              type="range"
+              min="-50"
+              max="50"
+              step="1"
+              value={bias}
+              onChange={(e) => setBias(parseFloat(e.target.value))}
+            />
+          </div>
+
+          <div className="acc-card">
+            <span className="acc-title">当前分类准确率：</span>
+            <div className="acc-val mono">{Math.round(accuracy * 100)}% ({correct}/{POINTS.length})</div>
+            <button
+              type="button"
+              className="btn-tiny"
+              onClick={autoOptimize}
+            >
+              ⚡ 模拟反向传播梯度下降 (自动优化权重)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="formula mono">
+        决策公式：W₁ · x + W₂ · y + b = {wX.toFixed(2)} · x + {wY.toFixed(2)} · y + {bias.toFixed(1)}
+      </div>
+
+      {passed || completed ? (
+        <div className="pass-banner">
+          <strong>通关达成！</strong> 准确率达到 {Math.round(accuracy * 100)}%！你亲手体验了机器学习的核心：没有手写任何 if-else，仅仅通过调整参数权重与偏置，就在几何空间中切出了完美的分类边界！
+        </div>
+      ) : null}
+    </div>
   )
 }

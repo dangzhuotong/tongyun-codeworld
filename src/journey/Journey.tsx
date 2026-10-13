@@ -7,8 +7,11 @@ import { AttentionLab } from '../segments/AttentionLab.tsx'
 import { ROAD_SIGNS, SEGMENTS } from '../segments/catalog.ts'
 import { CpuLab } from '../segments/CpuLab.tsx'
 import { GatesLab } from '../segments/GatesLab.tsx'
+import { MultiLanguageLab } from '../segments/MultiLanguageLab.tsx'
 import { NnLab } from '../segments/NnLab.tsx'
+import { OsLab } from '../segments/OsLab.tsx'
 import { SwitchLab } from '../segments/SwitchLab.tsx'
+import { SystemArchLab } from '../segments/SystemArchLab.tsx'
 import './journey.css'
 
 function isSegmentId(value: string | null): value is SegmentId {
@@ -60,7 +63,7 @@ export function Journey() {
         setActiveId(best)
         if (!dismissedRef.current.has(best)) setHintFor(best)
       },
-      { threshold: [0.3, 0.5, 0.7] },
+      { threshold: [0.2, 0.4, 0.6] },
     )
     nodes.forEach((node) => observer.observe(node))
     return () => observer.disconnect()
@@ -99,35 +102,39 @@ export function Journey() {
       <header className="topbar">
         <div className="topbar-inner">
           <div>
-            <p className="brand">代码世界</p>
+            <p className="brand">代码世界 · 架构师之路</p>
             <p className="brand-sub">
-              顺着路往下走 · 第 {activeIndex}/5 段 · {active.title}
+              顺着路往下走 · 第 {activeIndex}/8 段 · {active.title}
             </p>
           </div>
-          <p className="walked">走过 {completedCount}/5</p>
+          <p className="walked">走过 {completedCount}/8</p>
         </div>
         <div className="meter" aria-hidden="true">
           <span style={{ width: `${Math.round(scrollRatio * 100)}%` }} />
         </div>
         <div className="dots" aria-hidden="true">
           {SEGMENTS.map((segment) => {
-            const done = progress.segments[segment.id].completed
+            const done = progress.segments[segment.id]?.completed
             const current = segment.id === activeId
             const tone = done ? 'pip done' : current ? 'pip here' : 'pip'
-            return <span key={segment.id} className={tone} />
+            return <span key={segment.id} className={tone} title={segment.title} />
           })}
         </div>
       </header>
 
       <main className="road">
         <section className="intro">
-          <h1>从开关走到注意力</h1>
-          <p>路过会冒出一句短话。想动手，再打开路边的实验台。没做完也能继续往下滚。</p>
+          <h1>从物理开关到系统与大模型架构师</h1>
+          <p>
+            拒绝浮躁与黑盒，这是一条因果相连的连续探索之路：
+            从物理电平、算术加法器、CPU指令，到操作系统虚拟内存、六大编程语言架构抉择、高并发分布式防线，再到神经网络与大模型注意力。
+            每一段都有第一性原理图解与可动手的实操台。
+          </p>
         </section>
 
         {SEGMENTS.map((segment) => {
           const sign = ROAD_SIGNS.find((item) => item.after === segment.id)
-          const done = progress.segments[segment.id].completed
+          const done = !!progress.segments[segment.id]?.completed
           return (
             <div key={segment.id}>
               <section className="segment" data-segment={segment.id} id={segment.id}>
@@ -151,6 +158,23 @@ export function Journey() {
                   ) : null}
                   {segment.id === 'cpu' ? (
                     <CpuLab key={`cpu-${resetCount}`} completed={done} onComplete={() => complete('cpu')} />
+                  ) : null}
+                  {segment.id === 'os' ? (
+                    <OsLab key={`os-${resetCount}`} completed={done} onComplete={() => complete('os')} />
+                  ) : null}
+                  {segment.id === 'languages' ? (
+                    <MultiLanguageLab
+                      key={`languages-${resetCount}`}
+                      completed={done}
+                      onComplete={() => complete('languages')}
+                    />
+                  ) : null}
+                  {segment.id === 'arch' ? (
+                    <SystemArchLab
+                      key={`arch-${resetCount}`}
+                      completed={done}
+                      onComplete={() => complete('arch')}
+                    />
                   ) : null}
                   {segment.id === 'nn' ? (
                     <NnLab key={`nn-${resetCount}`} completed={done} onComplete={() => complete('nn')} />
@@ -176,9 +200,9 @@ export function Journey() {
 
         <section className="ending">
           <p>
-            {completedCount === 5
-              ? '五段都走过了。开关、门、指令、权重、注意力，进度留在这台设备上。'
-              : '五段先铺到这里。可以回头再拧没做完的实验台。'}
+            {completedCount === 8
+              ? '🎉 八大纪元全部走过！从物理开关、算术加法器、CPU指令、操作系统虚拟内存、六大编程语言架构，到高并发分布式防线、神经网络与大模型注意力，你已经打通了完整的架构师心智模型！'
+              : `已走过 ${completedCount}/8 段。可以继续往下滚，或随时回头拧开没做完的实验台。`}
           </p>
         </section>
       </main>
@@ -186,7 +210,7 @@ export function Journey() {
       <footer className="footer">
         {confirmReset ? (
           <div className="reset-row">
-            <span>清空五段的「走过了」？</span>
+            <span>清空八大纪元的「走过了」进度？</span>
             <button type="button" className="btn" onClick={confirmAndReset}>
               确定重置
             </button>
@@ -199,7 +223,7 @@ export function Journey() {
             重置进度
           </button>
         )}
-        <p>纯前端。进度只写在这台浏览器的 localStorage 里。</p>
+        <p>纯前端静态架构。进度写在这台浏览器的 localStorage 里，无后端无隐私收集。</p>
       </footer>
     </div>
   )
