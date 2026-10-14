@@ -60,7 +60,7 @@ export default function App() {
             >
               <span className="tab-icon">🗺️</span>
               <span className="tab-name">知识拓扑地图</span>
-              <span className="tab-pill-count">14+ 核心域</span>
+              <span className="tab-pill-count">25 个核心域</span>
             </button>
 
             <button

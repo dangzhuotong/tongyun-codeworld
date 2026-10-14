@@ -3350,3 +3350,482 @@
   font-size: 0.85rem;
 }
 
+/* ==========================================================================
+   移动端响应式适配 (<=768px 与 <=420px)：导航、表格、代码块、多栏改单栏与间距缩放
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 顶部状态与导航 */
+  .topbar {
+    padding: 10px 14px;
+  }
+
+  .topbar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .status-badge {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .meter-mini {
+    flex: 1;
+    max-width: 140px;
+    margin-left: 10px;
+  }
+
+  .step-nav-bar {
+    margin-top: 8px;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .step-nav-pill {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+
+  /* 舞台容器与通用卡片 */
+  .stage-container {
+    padding: 0 12px;
+    margin: 14px auto 30px;
+  }
+
+  .lab-stage {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .lab-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .lab-head h2 {
+    font-size: 1.25rem;
+  }
+
+  .lab-goal-banner {
+    font-size: 0.84rem;
+    padding: 8px 12px;
+  }
+
+  /* 底部导向控制条 */
+  .step-footer-bar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .step-status-center {
+    order: -1;
+    width: 100%;
+  }
+
+  .step-footer-bar .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* 全局代码块与表格横向滚动 */
+  pre,
+  code,
+  .code-block,
+  .mono-formula-box,
+  .branch-code-snippet,
+  .log-entries {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.76rem;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 面试题卡片 */
+  .interview-section {
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+
+  .interview-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .interview-cards-grid {
+    gap: 8px;
+  }
+
+  .interview-item-card {
+    padding: 10px 12px;
+  }
+
+  .q-left {
+    flex-direction: row;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .q-text {
+    font-size: 0.85rem;
+  }
+
+  .q-toggle-text {
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  .interview-ans-box {
+    font-size: 0.82rem;
+    padding: 10px 12px;
+  }
+
+  .epoch-sign {
+    padding: 12px 14px;
+  }
+
+  .ai-mapping-banner {
+    padding: 12px 14px;
+  }
+
+  /* 各实操组件响应式：多栏改单栏 */
+  .gates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .adder-inputs-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cpu-architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .pyramid-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .cpu-pipeline-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .phases-bar {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+
+  .lab-sub-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .sub-tab-btn {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding: 6px 10px;
+  }
+
+  .memory-sandbox {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .proc-column,
+  .physical-ram-column {
+    width: 100%;
+  }
+
+  .epoll-compare-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .process-layout-tower {
+    width: 100%;
+  }
+
+  .tower-segment {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 6px 10px;
+  }
+
+  .lang-tabs-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .lang-tab-pill {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+
+  .score-bars-grid {
+    width: 100%;
+  }
+
+  .score-bar-item {
+    grid-template-columns: 120px 1fr 30px;
+    font-size: 0.76rem;
+  }
+
+  .lang-internals-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .architect-advice-box {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .traffic-control-panel {
+    padding: 12px;
+  }
+
+  .weapons-switches-bar {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .weapon-toggle-btn {
+    width: 100%;
+    text-align: left;
+  }
+
+  .raft-nodes-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .calc-dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .paged-comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .bars li {
+    grid-template-columns: 2.8rem 1fr 2.6rem;
+  }
+
+  .tokens {
+    gap: 6px;
+  }
+
+  .token {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .plot {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .bit-row-8 {
+    padding: 8px 4px;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .conversion-display {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .topbar {
+    padding: 8px 10px;
+  }
+
+  .brand {
+    font-size: 0.98rem;
+  }
+
+  .brand-sub {
+    font-size: 0.78rem;
+  }
+
+  .step-nav-pill {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+    gap: 4px;
+  }
+
+  .step-pill-idx {
+    width: 16px;
+    height: 16px;
+    font-size: 0.65rem;
+  }
+
+  .stage-container {
+    padding: 0 6px;
+    margin: 10px auto 24px;
+  }
+
+  .lab-stage {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .lab-head h2 {
+    font-size: 1.15rem;
+  }
+
+  .lab-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .lab-goal-banner {
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .byte-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .bit-col {
+    min-width: 32px;
+  }
+
+  .bit-weight {
+    font-size: 0.6rem;
+  }
+
+  .bit-weight-val {
+    font-size: 0.58rem;
+  }
+
+  .bit-val {
+    font-size: 0.9rem;
+  }
+
+  .toggle {
+    width: 42px;
+    height: 24px;
+  }
+
+  .toggle-knob {
+    width: 16px;
+    height: 16px;
+  }
+
+  .toggle.on .toggle-knob {
+    transform: translateX(18px);
+  }
+
+  .conversion-display {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .score-bar-item {
+    grid-template-columns: 90px 1fr 24px;
+    font-size: 0.7rem;
+  }
+
+  .score-label {
+    font-size: 0.68rem;
+  }
+
+  .score-num {
+    font-size: 0.68rem;
+  }
+
+  .code-block {
+    font-size: 0.7rem;
+    padding: 8px 10px;
+  }
+
+  .interview-section {
+    padding: 10px 12px;
+  }
+
+  .interview-fire-badge {
+    font-size: 0.85rem;
+  }
+
+  .interview-hint {
+    font-size: 0.7rem;
+  }
+
+  .q-text {
+    font-size: 0.8rem;
+  }
+
+  .q-toggle-text {
+    font-size: 0.68rem;
+  }
+
+  .interview-focus {
+    font-size: 0.72rem;
+  }
+
+  .interview-ans-box {
+    font-size: 0.76rem;
+    padding: 8px 10px;
+  }
+
+  .epoch-sign {
+    padding: 10px 12px;
+  }
+
+  .epoch-sign h4 {
+    font-size: 0.88rem;
+  }
+
+  .epoch-sign p {
+    font-size: 0.78rem;
+  }
+
+  .finish-pill {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+

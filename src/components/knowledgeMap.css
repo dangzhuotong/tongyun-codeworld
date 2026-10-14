@@ -609,3 +609,186 @@
   font-size: 0.82rem;
   padding: 6px 14px;
 }
+
+/* 知识地图移动端响应式适配 (<=768px 与 <=420px) */
+@media (max-width: 768px) {
+  .map-toolbar {
+    padding: 10px 14px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-chips {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+
+  .chip-btn {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 0.76rem;
+  }
+
+  .search-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .search-input {
+    font-size: 0.8rem;
+    padding: 7px 28px 7px 12px;
+  }
+
+  .map-workspace {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .graph-canvas-wrap {
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .svg-map-stage {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    aspect-ratio: auto;
+    height: 380px;
+    border-radius: 14px;
+  }
+
+  .map-svg-layer {
+    min-width: 760px;
+    height: 100%;
+  }
+
+  .graph-helper-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 0.75rem;
+  }
+
+  .node-doc-panel {
+    max-height: none;
+    overflow-y: visible;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .doc-title {
+    font-size: 1.25rem;
+  }
+
+  .doc-summary-lead {
+    font-size: 0.86rem;
+    padding: 6px 10px;
+  }
+
+  .mechanism-item-card {
+    padding: 10px 12px;
+  }
+
+  .jump-case-btn {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .jump-arrow {
+    align-self: flex-end;
+  }
+
+  .lab-jump-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .lab-jump-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .map-toolbar {
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .chip-btn {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+
+  .graph-canvas-wrap {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .svg-map-stage {
+    height: 330px;
+  }
+
+  .map-svg-layer {
+    min-width: 660px;
+  }
+
+  .node-doc-panel {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .doc-title {
+    font-size: 1.12rem;
+  }
+
+  .doc-header-badges {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .category-badge,
+  .importance-badge {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+  }
+
+  .nexus-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .nexus-pill-btn {
+    font-size: 0.74rem;
+    padding: 3px 8px;
+  }
+
+  .mechanism-item-card {
+    padding: 8px 10px;
+  }
+
+  .mech-title {
+    font-size: 0.82rem;
+  }
+
+  .mech-desc {
+    font-size: 0.78rem;
+  }
+
+  .mental-model-text {
+    font-size: 0.84rem;
+  }
+
+  .doc-text-block {
+    font-size: 0.82rem;
+  }
+}
+

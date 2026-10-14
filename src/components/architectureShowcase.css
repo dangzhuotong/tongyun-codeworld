@@ -618,3 +618,215 @@
   margin: 0;
   font-style: italic;
 }
+
+/* 架构案例展示移动端响应式适配 (<=768px 与 <=420px) */
+@media (max-width: 768px) {
+  .arch-showcase-container {
+    gap: 14px;
+  }
+
+  .arch-case-nav {
+    gap: 6px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .case-nav-btn {
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+
+  .case-icon {
+    font-size: 1.15rem;
+  }
+
+  .case-nav-title {
+    font-size: 0.78rem;
+  }
+
+  .case-nav-cat {
+    font-size: 0.68rem;
+  }
+
+  .case-header-card {
+    padding: 16px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+
+  .case-header-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .case-main-title {
+    font-size: 1.25rem;
+  }
+
+  .case-sub-title {
+    font-size: 0.85rem;
+  }
+
+  .case-metrics-badges {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .metric-box {
+    min-width: 0;
+    padding: 6px 8px;
+  }
+
+  .case-scenario-box {
+    font-size: 0.82rem;
+    padding: 8px 10px;
+  }
+
+  .case-section-card {
+    padding: 14px 16px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+
+  .card-sec-title {
+    font-size: 1.05rem;
+  }
+
+  .card-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .flow-stepper-bar {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+
+  .flow-step-btn {
+    min-width: 120px;
+    flex-shrink: 0;
+    padding: 8px 10px;
+  }
+
+  .flow-step-detail-card {
+    padding: 12px 14px;
+  }
+
+  .step-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .step-comp-badge {
+    align-self: flex-start;
+  }
+
+  .step-detail-title {
+    font-size: 0.95rem;
+  }
+
+  .step-detail-desc {
+    font-size: 0.84rem;
+  }
+
+  .layers-stack {
+    gap: 6px;
+  }
+
+  .layer-row-card {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 8px 12px;
+  }
+
+  .approach-comparison {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .interview-insight-card {
+    padding: 16px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .insight-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .copy-insight-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .insight-content {
+    font-size: 0.84rem;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .case-header-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .case-main-title {
+    font-size: 1.12rem;
+  }
+
+  .case-sub-title {
+    font-size: 0.78rem;
+  }
+
+  .case-section-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .card-sec-title {
+    font-size: 0.95rem;
+  }
+
+  .challenge-item-card {
+    padding: 10px 12px;
+  }
+
+  .ch-problem {
+    font-size: 0.88rem;
+  }
+
+  .bad-box,
+  .good-box {
+    padding: 8px 10px;
+  }
+
+  .bad-box p,
+  .good-box p {
+    font-size: 0.78rem;
+  }
+
+  .interview-insight-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .insight-badge {
+    font-size: 0.9rem;
+  }
+
+  .insight-content {
+    font-size: 0.8rem;
+  }
+}
+
