@@ -9,7 +9,19 @@ function siteBase(): string {
 }
 
 // https://vite.dev/config/
+const base = siteBase()
+
 export default defineConfig({
-  base: siteBase(),
+  base,
   plugins: [react()],
+  server: {
+    // 仅本地 dev。线上静态站先请求 raw.githubusercontent.com，失败再试 jsDelivr。
+    proxy: {
+      [`${base}sdn-raw`]: {
+        target: 'https://raw.githubusercontent.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^.*\/sdn-raw(?=\/|$)/, '/liquidslr/system-design-notes/main'),
+      },
+    },
+  },
 })

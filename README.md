@@ -53,6 +53,14 @@ npm run preview
 
 构建产物在 `dist/`，可作静态站部署。
 
+## 面试书架
+
+主路仍是连续探索（电 → 大模型）。顶栏 **面试书架**，或打开 `#/bookshelf/system-design`，会另开阅读角，不替换这条路。
+
+书架列出 Alex Xu《System Design Interview》公开笔记的 28 章（01. Scaling … 28. Stock Exchange）。正文和配图在你点开某一章时，才从 [`liquidslr/system-design-notes`](https://github.com/liquidslr/system-design-notes) 拉取，不放进本仓库。也可对照 [Pagefy 上的同系列阅读页](https://pagefy-blush.vercel.app/system-design/system-design-interview-by-alex-xu)。
+
+线上先读 `raw.githubusercontent.com`（正文用 fetch，配图直接当图片地址）。失败再试 jsDelivr。配图若第一处打不开，会再试另一处。本地 `npm run dev` 若两处都读不到正文，会再走开发服务器上的 `/sdn-raw` 代理；GitHub Pages 没有这个代理。
+
 ## 推荐目录结构（实现后目标）
 
 ```
@@ -78,6 +86,7 @@ tongyun-codeworld/
     ├── journey/         # 长卷/长路：滚动容器、路段渲染
     ├── segments/        # 各时代路段配置与路边实验组件
     ├── progress/        # localStorage 进度读写
+    ├── bookshelf/       # 面试书架：章节目录 + 运行时拉取公开笔记
     └── components/      # 通用 UI（提示气泡、实验台卡片等）
 ```
 
