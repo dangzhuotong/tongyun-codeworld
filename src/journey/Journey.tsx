@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HintBubble } from '../components/HintBubble.tsx'
 import { LabCard } from '../components/LabCard.tsx'
 import { useProgress } from '../progress/useProgress.ts'
@@ -13,12 +13,33 @@ import { SwitchLab } from '../segments/SwitchLab.tsx'
 import { SystemArchLab } from '../segments/SystemArchLab.tsx'
 import './journey.css'
 
-export function Journey() {
+interface JourneyProps {
+  initialSegmentId?: string
+}
+
+export function Journey({ initialSegmentId }: JourneyProps = {}) {
   const { progress, complete, setSwitchPattern, reset, resetCount, completedCount } = useProgress()
-  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [currentStepIndex, setCurrentStepIndex] = useState(() => {
+    if (initialSegmentId) {
+      const idx = SEGMENTS.findIndex((s) => s.id === initialSegmentId)
+      return idx >= 0 ? idx : 0
+    }
+    return 0
+  })
   const [showHint, setShowHint] = useState(true)
   const [expandedInterview, setExpandedInterview] = useState<number | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
+
+  useEffect(() => {
+    if (initialSegmentId) {
+      const idx = SEGMENTS.findIndex((s) => s.id === initialSegmentId)
+      if (idx >= 0) {
+        setCurrentStepIndex(idx)
+        setShowHint(true)
+        setExpandedInterview(null)
+      }
+    }
+  }, [initialSegmentId])
 
   const active = SEGMENTS[currentStepIndex]
   const isFirst = currentStepIndex === 0
