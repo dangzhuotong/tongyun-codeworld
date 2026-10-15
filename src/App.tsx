@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { closeBookshelf, navigateBookshelf, parseBookshelfHash } from './bookshelf/route.ts'
 import { ArchitectureShowcase } from './components/ArchitectureShowcase.tsx'
 import { KnowledgeMap } from './components/KnowledgeMap.tsx'
 import { Journey } from './journey/Journey.tsx'
 import './App.css'
 
+const Bookshelf = lazy(() =>
+  import('./bookshelf/Bookshelf.tsx').then((mod) => ({ default: mod.Bookshelf })),
+)
+
 export type NavTab = 'map' | 'arch' | 'labs'
 
 export default function App() {
+  const [shelf, setShelf] = useState(() => parseBookshelfHash(window.location.hash))
   const [activeTab, setActiveTab] = useState<NavTab>('map')
   const [selectedNodeId, setSelectedNodeId] = useState<string>('binary-logic')
   const [selectedArchId, setSelectedArchId] = useState<string>('flash-sale')
@@ -33,8 +39,19 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  useEffect(() => {
+    const syncShelf = () => setShelf(parseBookshelfHash(window.location.hash))
+    window.addEventListener('hashchange', syncShelf)
+    window.addEventListener('popstate', syncShelf)
+    return () => {
+      window.removeEventListener('hashchange', syncShelf)
+      window.removeEventListener('popstate', syncShelf)
+    }
+  }, [])
+
   return (
-    <div className="codeworld-app">
+    <>
+    <div className="codeworld-app" aria-hidden={shelf.open || undefined} inert={shelf.open || undefined}>
       {/* 顶层吸顶导航总览 */}
       <header className="app-top-nav">
         <div className="nav-container">
@@ -89,6 +106,11 @@ export default function App() {
               <span className="tab-pill-count">8 节动手玩</span>
             </button>
           </nav>
+          <button type="button" className="bookshelf-entry" onClick={() => navigateBookshelf(null)}>
+            <span className="tab-icon" aria-hidden="true">📚</span>
+            <span className="tab-name">面试书架</span>
+            <span className="tab-pill-count">28 章</span>
+          </button>
         </div>
       </header>
 
@@ -129,5 +151,11 @@ export default function App() {
         </p>
       </footer>
     </div>
+    {shelf.open ? (
+      <Suspense fallback={<p className="bookshelf-fallback">正在打开书架…</p>}>
+        <Bookshelf slug={shelf.slug} onClose={closeBookshelf} />
+      </Suspense>
+    ) : null}
+    </>
   )
 }
