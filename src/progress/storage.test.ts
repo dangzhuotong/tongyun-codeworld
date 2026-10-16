@@ -122,6 +122,96 @@ describe('progress storage module', () => {
         mockStorage.getItem = originalGetItem
       }
     })
+
+    it('returns emptyProgress when the stored value is the literal string undefined', () => {
+      mockStorage.setItem(STORAGE_KEY, 'undefined')
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('returns emptyProgress when the parsed top-level value is false', () => {
+      mockStorage.setItem(STORAGE_KEY, 'false')
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('returns emptyProgress for an empty JSON object', () => {
+      mockStorage.setItem(STORAGE_KEY, '{}')
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('returns emptyProgress when the stored value is an array', () => {
+      mockStorage.setItem(STORAGE_KEY, '[]')
+      expect(loadProgress()).toEqual(emptyProgress())
+
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: [] }))
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('returns emptyProgress when segments is null', () => {
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: null }))
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('returns emptyProgress when segments is a non-object primitive', () => {
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: 'not-an-object' }))
+      expect(loadProgress()).toEqual(emptyProgress())
+
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: 7 }))
+      expect(loadProgress()).toEqual(emptyProgress())
+    })
+
+    it('keeps defaults when a known segment value is null or a boolean', () => {
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: { cpu: null } }))
+      expect(loadProgress().segments.cpu).toEqual({ completed: false })
+
+      mockStorage.setItem(STORAGE_KEY, JSON.stringify({ segments: { gates: true } }))
+      expect(loadProgress().segments.gates).toEqual({ completed: false })
+    })
+
+    it('preserves an explicitly empty lastPattern string instead of falling back to the default', () => {
+      mockStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ segments: { switch: { lastPattern: '' } } }),
+      )
+      const loaded = loadProgress()
+      expect(loaded.segments.switch.lastPattern).toBe('')
+      expect(loaded.segments.switch.completed).toBe(false)
+    })
+
+    it('ignores unknown segment keys while keeping known ones', () => {
+      mockStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          segments: {
+            switch: { completed: true },
+            totallyUnknown: { completed: true },
+          },
+        }),
+      )
+      const loaded = loadProgress()
+      expect(loaded.segments.switch.completed).toBe(true)
+      expect(loaded.segments.gates.completed).toBe(false)
+      expect('totallyUnknown' in loaded.segments).toBe(false)
+    })
+
+    it('carries over extra unknown fields inside a known segment (merge behavior)', () => {
+      mockStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ segments: { gates: { completed: true, note: 'kept' } } }),
+      )
+      const loaded = loadProgress()
+      expect(loaded.segments.gates.completed).toBe(true)
+      expect((loaded.segments.gates as unknown as { note?: string }).note).toBe('kept')
+    })
+
+    it('does not share mutable state between successive loadProgress calls', () => {
+      const first = loadProgress()
+      first.segments.switch.completed = true
+      first.segments.switch.lastPattern = 'mutated'
+
+      const second = loadProgress()
+      expect(second.segments.switch.completed).toBe(false)
+      expect(second.segments.switch.lastPattern).toBe('01000001')
+    })
   })
 
   describe('saveProgress', () => {
@@ -157,6 +247,27 @@ describe('progress storage module', () => {
       } finally {
         mockStorage.setItem = originalSetItem
       }
+    })
+
+    it('stores a JSON string (not an object) under the namespaced key', () => {
+      saveProgress(emptyProgress())
+      const raw = mockStorage.getItem(STORAGE_KEY)
+      expect(typeof raw).toBe('string')
+      expect(raw).toBe(JSON.stringify(emptyProgress()))
+      expect(STORAGE_KEY).toBe('tongyun-codeworld:progress')
+    })
+
+    it('overwrites previously saved state on each save', () => {
+      const first = emptyProgress()
+      first.segments.gates.completed = true
+      saveProgress(first)
+
+      const second = emptyProgress()
+      second.segments.os.completed = true
+      saveProgress(second)
+
+      expect(loadProgress()).toEqual(second)
+      expect(loadProgress().segments.gates.completed).toBe(false)
     })
   })
 })
