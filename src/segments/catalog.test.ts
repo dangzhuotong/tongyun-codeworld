@@ -41,6 +41,36 @@ describe('segments catalog', () => {
         }
       }
     })
+
+    it('provides at least two interview Q&As per segment', () => {
+      for (const segment of SEGMENTS) {
+        expect(segment.interviews.length).toBeGreaterThanOrEqual(2)
+      }
+    })
+
+    it('has unique titles and subtitles across all segments', () => {
+      const titles = SEGMENTS.map((s) => s.title)
+      const subtitles = SEGMENTS.map((s) => s.subtitle)
+      expect(new Set(titles).size).toBe(SEGMENTS.length)
+      expect(new Set(subtitles).size).toBe(SEGMENTS.length)
+    })
+
+    it('has unique aiMapping text for every segment', () => {
+      const mappings = SEGMENTS.map((s) => s.aiMapping)
+      expect(new Set(mappings).size).toBe(SEGMENTS.length)
+    })
+
+    it('has unique interview questions within each segment', () => {
+      for (const segment of SEGMENTS) {
+        const questions = segment.interviews.map((qa) => qa.question)
+        expect(new Set(questions).size).toBe(questions.length)
+      }
+    })
+
+    it('has unique interview questions across all segments', () => {
+      const allQuestions = SEGMENTS.flatMap((s) => s.interviews.map((qa) => qa.question))
+      expect(new Set(allQuestions).size).toBe(allQuestions.length)
+    })
   })
 
   describe('ROAD_SIGNS', () => {
@@ -67,6 +97,25 @@ describe('segments catalog', () => {
         expect(sign.title.trim()).not.toBe('')
         expect(sign.text.trim()).not.toBe('')
       }
+    })
+
+    it('has at most one road sign per segment (unique after targets)', () => {
+      const afters = ROAD_SIGNS.map((s) => s.after)
+      expect(new Set(afters).size).toBe(afters.length)
+    })
+
+    it('orders road signs to follow the segment order', () => {
+      const order = new Map<string, number>(SEGMENT_IDS.map((id, idx) => [id, idx]))
+      const indices = ROAD_SIGNS.map((sign) => order.get(sign.after)!)
+      for (let i = 1; i < indices.length; i += 1) {
+        expect(indices[i]).toBeGreaterThan(indices[i - 1])
+      }
+    })
+
+    it('has unique road sign IDs, titles, and texts', () => {
+      expect(new Set(ROAD_SIGNS.map((s) => s.id)).size).toBe(ROAD_SIGNS.length)
+      expect(new Set(ROAD_SIGNS.map((s) => s.title)).size).toBe(ROAD_SIGNS.length)
+      expect(new Set(ROAD_SIGNS.map((s) => s.text)).size).toBe(ROAD_SIGNS.length)
     })
   })
 })
